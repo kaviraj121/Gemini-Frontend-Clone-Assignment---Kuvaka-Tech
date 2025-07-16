@@ -1,70 +1,148 @@
-# Getting Started with Create React App
+# ⚡ Gemini Frontend Clone
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, mobile-responsive Gemini chat clone built with React, Zustand, Tailwind CSS, and React Hook Form + Zod.
 
-## Available Scripts
+🔗 **Live Demo**: [View on Netlify/Vercel](https://your-live-link.com)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 🔐 OTP-based login with phone and country code (simulated)
+- 💬 Chatroom creation, deletion, and real-time interaction
+- 🤖 AI-like message replies with throttled delay (`setTimeout`)
+- ⏬ Reverse infinite scroll and pagination (simulated)
+- 🌙 Dark mode toggle (global + persisted)
+- 📱 Fully responsive for mobile and desktop
+- 📤 Image upload support
+- 📋 Copy-to-clipboard on hover
+- 🔁 Toast notifications and loading states
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🧩 Folder Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+src/
+├─ api/                     # API fetch for countries
+│  └─ countries.js
+│
+├─ components/             # UI and logic components
+│  ├─ Auth/                # Phone & OTP steps
+│  ├─ Chat/                # ChatInput, MessageBubble, TypingIndicator
+│  └─ UI/                  # DarkModeToggle, ConfirmDialog, Skeletons
+│
+├─ hooks/                  # Zustand stores
+│  ├─ useAuthStore.js      # Auth logic and persistence
+│  ├─ useChatStore.js      # Chatroom and messages
+│  └─ useDarkModeStore.js  # Global dark mode toggle
+│
+├─ pages/                  # Page routes
+│  ├─ Auth.jsx
+│  ├─ Dashboard.jsx
+│  └─ ChatRoom.jsx
+│
+└─ App.js                  # Main router and layout
+```
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🛠️ Setup Instructions
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Clone the repo**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+git clone https://github.com/your-username/gemini-clone.git
+cd gemini-clone
+```
 
-### `npm run eject`
+2. **Install dependencies**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Start the app**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm start
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+> Make sure you're using Node v16+ and have internet access for country API.
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🧠 Feature Implementations
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### ✅ Throttling AI Responses
 
-### Code Splitting
+```js
+setTimeout(() => {
+  // Simulates Gemini typing
+  setMessages([...messages, aiResponse]);
+}, 1000 + Math.random() * 1000); // random delay
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Used in `ChatRoom.jsx` after each user message.
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### ✅ Form Validation
 
-### Making a Progressive Web App
+Used **React Hook Form** with **Zod schema** for:
+- Country & phone number validation
+- OTP format (6-digit check)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```js
+const schema = z.object({
+  phone: z.string().regex(/^\d{6,14}$/),
+  otp: z.string().regex(/^\d{6}$/),
+});
+```
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### ✅ Reverse Infinite Scroll (Simulated)
 
-### Deployment
+- Messages rendered with `flex-col-reverse` (optional)
+- Placeholder logic can simulate loading old messages on scroll
+- Ideal place to implement: `onScroll` handler + `slice` pagination
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+### ✅ Client-side Pagination
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Loads 20 messages per page
+- Can use `.slice()` based on scroll index
+- Setup dummy messages in `useChatStore` or state with `page` logic
+
+---
+
+## 🌓 Dark Mode
+
+- Implemented using Tailwind's `darkMode: 'class'`
+- Zustand persists user preference
+- Toggle available globally from header on all pages
+
+---
+
+## ✅ Tech Stack
+
+- React (CRA)
+- Tailwind CSS
+- Zustand (global state)
+- React Router
+- React Hook Form + Zod
+- React Hot Toast
+
+---
+
+## ✨ Author
+
+Made with ❤️ by [Kavi Raj](https://github.com/kavi)
+
+---
+
+## 📄 License
+
+[MIT](LICENSE)

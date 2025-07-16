@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import AuthPage from "./pages/Auth";
+import Dashboard from "./pages/Dashboard";
+import { useAuthStore } from "./hooks/useAuthStore";
+import ChatRoom from "./pages/ChatRoom";
 
-function App() {
+export default function App() {
+  const { stage } = useAuthStore();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/auth" element={<AuthPage />} />
+        <Route
+          path="/dashboard"
+          element={stage === "done" ? <Dashboard /> : <Navigate to="/auth" />}
+        />
+        <Route
+  path="/"
+  element={<Navigate to={stage === "done" ? "/dashboard" : "/auth"} replace />}
+/>
+    <Route path="/chat/:id" element={<ChatRoom />} />
+
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
