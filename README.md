@@ -2,7 +2,7 @@
 
 A modern, mobile-responsive Gemini chat clone built with React, Zustand, Tailwind CSS, and React Hook Form + Zod.
 
-🔗 **Live Demo**: [View on Netlify/Vercel](https://your-live-link.com)
+🔗 **Live Demo**: [View on Netlify/Vercel](https://gemini-frontend-clone-assignment-ku.vercel.app/auth)
 
 ---
 
@@ -139,7 +139,7 @@ const schema = z.object({
 
 ## ✨ Author
 
-Made with ❤️ by [Kavi Raj](https://github.com/kavi)
+Made with ❤️ by [Kavi Raj](https://github.com/kaviraj121)
 
 ---
 
